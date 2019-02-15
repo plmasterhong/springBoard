@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+</head>
+<body>
+	<div class="container">
+		<div class="title">
+			<h3>BoardList</h3>
+		</div>
+	</div>
+	<div class="col-lg-8 col-md-10 ml-auto mr-auto">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center">boardNo</th>
+						<th class="text-center">boardTitle</th>
+						<th class="text-center">boardUser</th>
+						<th class="text-center">boardDate</th>
+						<th colspan="2" class="text-center">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="b : ${list}">
+						<td class="text-center" th:text="${b.boardNo}"></td>
+						<td th:text="${b.boardTitle}"></td>
+						<td class="text-center" th:text="${b.boardUser}"></td>
+						<td class="text-center" th:text="${b.boardDate}"></td>
+						<td class="text-center"><a th:href="@{/boardModify(boardNo=${b.boardNo})}"><i class="material-icons">edit</i></a></td>
+						<td class="text-center"><a th:href="@{/boardRemove(boardNo=${b.boardNo})}"><i class="material-icons">close</i></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="card-footer p-0">
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center mt-3 mr-3">
+                        <li class="page-item">
+                        	<a class="page-link" th:href="@{/boardList}">맨처음</a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage > 1}">
+                        	<a class="page-link" th:href="@{/boardList(currentPage=${currentPage-1})}">이전</a>
+                        </li>
+                        <li class="page-item" th:each="num: ${#numbers.sequence(startPageNum, lastPageNum)}">
+							<th:block th:if="${currentPage == num}">
+								<span class="page-link active">${num}
+									<span class="sr-only">(current)</span>
+                            	</span>
+							</th:block>
+							<th:block th:unless="${currentPage == num}">
+								<a class="page-link" th:href="@{/boardList(currentPage=${num})}">${num}</a>
+							</th:block>
+						</li>
+						<li class="page-item" th:if="${currentPage < lastPage}">
+                        	<a class="page-link" th:href="@{/boardList(currentPage=${currentPage+1})}">다음</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/boardList(currentPage=${lastPage})}">마지막</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+		</div>
+	</div>	
+</body>
+</html>

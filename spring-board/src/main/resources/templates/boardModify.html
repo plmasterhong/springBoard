@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+</head>
+<body>
+   <div class="col-md-6 offset-md-3">
+		<div class="card card-outline-secondary">
+		    <div class="card-header">
+		        <h3 class="mb-0">boardModify</h3>
+		    </div>
+		    <div class="card-body">
+		        <form class="form" role="form" autocomplete="off" action="/boardModify" method="post">
+		            <div class="form-group">
+		                <label for="inputName">Title</label>
+		                <input type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}">
+		            </div>
+		            <div class="form-group">
+		                <label for="inputName">Content</label>
+		                <textarea class="form-control" name="boardContent" rows="5" cols="50" >${board.boardContent}</textarea>
+		            </div>
+		            <div class="form-group">
+		                <label for="inputName">Name</label>
+		                <input type="text" class="form-control" name="boardUser" th:value="${board.boardUser}" readonly="readonly">
+		            </div>
+		            <div class="form-group">
+		                <label for="inputName">Password</label>
+		                <input type="password" class="form-control" name="boardPw">
+		            </div>
+		            <div class="form-group">
+		            	<input type="hidden" name="boardNo" th:value="${board.boardNo}"/>
+		            	<input class="btn btn-success btn-lg float-right" type="submit" value="글입력"/>
+		           		<input class="btn btn-success btn-lg float-right" type="reset" value="원래대로"/>
+		            </div>
+		        </form>
+		    </div>
+		</div>
+	</div>
+</body>
+</html>
