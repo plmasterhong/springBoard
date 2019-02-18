@@ -1,45 +1,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#boardModifyBtn').click(function(){
+				$('#boardTitle').removeAttr('readonly');
+				$('#boardContent').removeAttr('readonly');
+				$('#boardPw').removeAttr('readonly');
+					
+			});
+			
+	        $('#boardBtn').click(function(){
+	        	$('#boardModifyForm').submit(function(event){
+	        		if($('#boardPw').val().length<4){
+		            	$('#boardPw').attr('placeholder','4자리이상 입력해주세요.');
+		            	$('#boardPw').focus();
+		            	return false;
+	        		}else if($('#boardTitle').val().length<1){
+		            	$('#boardTitle').attr('placeholder','입력해주세요.');
+		            	$('#boardTitle').focus();
+		            	return false;
+		            }else if($('#boardContent').val().length<1){
+		            	$('#boardContent').attr('placeholder','입력해주세요.');
+		            	$('#boardContent').focus();
+		            	return false;
+		            }
+	        	});
+	        });
+	    });
+	</script>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
 </head>
 <body>
    <div class="col-md-6 offset-md-3">
-		<div class="card card-outline-secondary">
-		    <div class="card-header">
+		<!-- <div class="card card-outline-secondary"> -->
+		    <div class="card-body">
 		        <h3 class="mb-0">boardModify</h3>
 		    </div>
 		    <div class="card-body">
-		        <form class="form" role="form" autocomplete="off" action="/boardModify" method="post">
+		        <form id="boardModifyForm" class="form" role="form" autocomplete="off" action="/boardModify" method="post">
 		            <div class="form-group">
 		                <label for="inputName">Title</label>
-		                <input type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}">
+		                <input id="boardTitle" type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}" readonly="readonly">
 		            </div>
 		            <div class="form-group">
 		                <label for="inputName">Content</label>
-		                <textarea class="form-control" name="boardContent" rows="5" cols="50" >${board.boardContent}</textarea>
+		                <textarea id="boardContent" class="form-control" name="boardContent" rows="5" cols="50" th:text="${board.boardContent}" readonly="readonly"></textarea>
 		            </div>
 		            <div class="form-group">
 		                <label for="inputName">Name</label>
-		                <input type="text" class="form-control" name="boardUser" th:value="${board.boardUser}" readonly="readonly">
+		                <input id="boardUser" type="text" class="form-control" name="boardUser" th:value="${board.boardUser}" readonly="readonly">
 		            </div>
 		            <div class="form-group">
 		                <label for="inputName">Password</label>
-		                <input type="password" class="form-control" name="boardPw">
+		                <input id="boardPw" type="password" class="form-control" name="boardPw" readonly="readonly">
 		            </div>
 		            <div class="form-group">
 		            	<input type="hidden" name="boardNo" th:value="${board.boardNo}"/>
-		            	<input class="btn btn-success btn-lg float-right" type="submit" value="글입력"/>
+		            	<a class="btn btn-success btn-lg float-right" th:href="@{/boardRemove(boardNo=${board.boardNo})}">삭제</a>
+		            	<input id="boardBtn" class="btn btn-success btn-lg float-right" type="submit" value="글입력"/>
+		            	<input id="boardModifyBtn" class="btn btn-success btn-lg float-right" type="button" value="수정하기"/>
 		           		<input class="btn btn-success btn-lg float-right" type="reset" value="원래대로"/>
 		            </div>
 		        </form>
 		    </div>
-		</div>
+		<!-- </div> -->
 	</div>
 </body>
 </html>

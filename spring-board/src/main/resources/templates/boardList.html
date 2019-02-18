@@ -6,12 +6,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
 </head>
 <body>
 	<div class="container">
 		<div class="title">
 			<h3>BoardList</h3>
+			<a href="/boardAdd" class="btn btn-info" role="button">글쓰기</a>
 		</div>
 	</div>
 	<div class="col-lg-8 col-md-10 ml-auto mr-auto">
@@ -23,17 +23,16 @@
 						<th class="text-center">boardTitle</th>
 						<th class="text-center">boardUser</th>
 						<th class="text-center">boardDate</th>
-						<th colspan="2" class="text-center">Action</th>
+						
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="b : ${list}">
 						<td class="text-center" th:text="${b.boardNo}"></td>
-						<td th:text="${b.boardTitle}"></td>
+						<td><a th:href="@{/boardModify(boardNo=${b.boardNo})}" th:text="${b.boardTitle}"></a></td>
 						<td class="text-center" th:text="${b.boardUser}"></td>
 						<td class="text-center" th:text="${b.boardDate}"></td>
-						<td class="text-center"><a th:href="@{/boardModify(boardNo=${b.boardNo})}"><i class="material-icons">edit</i></a></td>
-						<td class="text-center"><a th:href="@{/boardRemove(boardNo=${b.boardNo})}"><i class="material-icons">close</i></a></td>
+						
 					</tr>
 				</tbody>
 			</table>
@@ -48,12 +47,10 @@
                         </li>
                         <li class="page-item" th:each="num: ${#numbers.sequence(startPageNum, lastPageNum)}">
 							<th:block th:if="${currentPage == num}">
-								<span class="page-link active">${num}
-									<span class="sr-only">(current)</span>
-                            	</span>
+								<span class="page-link active" th:text="${num}"></span>
 							</th:block>
 							<th:block th:unless="${currentPage == num}">
-								<a class="page-link" th:href="@{/boardList(currentPage=${num})}">${num}</a>
+								<a class="page-link" th:href="@{/boardList(currentPage=${num})}" th:text="${num}"></a>
 							</th:block>
 						</li>
 						<li class="page-item" th:if="${currentPage < lastPage}">

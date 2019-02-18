@@ -1,32 +1,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+	        $('#boardBtn').click(function(){
+	        	$('#boardRemoveForm').submit(function(event){
+	        		if($('#boardPw').val().length<4){
+		            	$('#boardPw').attr('placeholder','4자리이상 입력해주세요.');
+		            	$('#boardPw').focus();
+		            	return false;
+	        		}
+	        	});
+	        });
+	    });
+	</script>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
 </head>
 <body>
    <div class="col-md-6 offset-md-3">
-		<div class="card card-outline-secondary">
-		    <div class="card-header">
+		<!-- <div class="card card-outline-secondary"> -->
+		    <div class="card-body">
 		        <h3 class="mb-0">정말로 삭제하시겠습니까?</h3>
 		    </div>
 		    <div class="card-body">
-		        <form class="form" role="form" autocomplete="off" action="/boardRemove" method="get">
+		        <form id="boardRemoveForm" class="form" role="form" autocomplete="off" action="/boardRemove" method="get">
 		            <div class="form-group">
 		                <label for="inputName">Password</label>
-		                <input type="password" class="form-control" name="boardPw">
+		                <input id="boardPw" type="password" class="form-control" name="boardPw">
 		            </div>
 		            <div class="form-group">
 		            	<input type="hidden" name="boardNo" th:value="${board.boardNo}"/>
-		            	<input class="btn btn-success btn-lg float-right" type="submit" value="삭제완료"/>
+		            	<input id="boardBtn" class="btn btn-success btn-lg float-right" type="submit" value="삭제완료"/>
 		            </div>
 		        </form>
 		    </div>
-		</div>
+		<!-- </div> -->
 	</div>
 </body>
 </html>
