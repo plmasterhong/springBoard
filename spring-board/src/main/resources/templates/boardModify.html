@@ -8,7 +8,8 @@
 				$('#boardTitle').removeAttr('readonly');
 				$('#boardContent').removeAttr('readonly');
 				$('#boardPw').removeAttr('readonly');
-					
+				$('#boardBtn').attr('type','submit');
+				$('#boardModifyBtn').attr('type','hidden');
 			});
 			
 	        $('#boardBtn').click(function(){
@@ -63,7 +64,7 @@
 		            <div class="form-group">
 		            	<input type="hidden" name="boardNo" th:value="${board.boardNo}"/>
 		            	<a class="btn btn-success btn-lg float-right" th:href="@{/boardRemove(boardNo=${board.boardNo})}">삭제</a>
-		            	<input id="boardBtn" class="btn btn-success btn-lg float-right" type="submit" value="글입력"/>
+		            	<input id="boardBtn" class="btn btn-success btn-lg float-right" type="hidden" value="글입력"/>
 		            	<input id="boardModifyBtn" class="btn btn-success btn-lg float-right" type="button" value="수정하기"/>
 		           		<input class="btn btn-success btn-lg float-right" type="reset" value="원래대로"/>
 		            </div>
