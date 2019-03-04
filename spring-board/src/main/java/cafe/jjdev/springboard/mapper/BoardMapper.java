@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import cafe.jjdev.springboard.vo.Board;
+import cafe.jjdev.springboard.vo.Boardfile;
 
 /*
  * @file BoardMapper.java
@@ -41,6 +42,13 @@ public interface BoardMapper {
 	 * @return int
 	 */
 	int insertBoard(Board board);
+	
+	/* -insert처리-
+	 * @param Boardfile boardfile
+	 * @brief BoardMapper.xml(id)를 인터페이스 BoardMapper.java(메서드명)와 맵핑
+	 * @return int
+	 */
+	int insertBoardFile(Boardfile boardfile);
 	
 	/* -delete처리-
 	 * @param Board board

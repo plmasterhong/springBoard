@@ -1,5 +1,9 @@
 package cafe.jjdev.springboard.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Board {
     private int boardNo;
     private String boardPw;
@@ -7,7 +11,8 @@ public class Board {
     private String boardContent;
     private String boardUser;
     private String boardDate;
-    public int getBoardNo() {
+   
+	public int getBoardNo() {
         return boardNo;
     }
     public void setBoardNo(int boardNo) {
@@ -43,10 +48,11 @@ public class Board {
     public void setBoardDate(String boardDate) {
         this.boardDate = boardDate;
     }
-    @Override
-    public String toString() {
-        return "Board [boardNo=" + boardNo + ", boardPw=" + boardPw + ", boardTitle=" + boardTitle + ", boardContent="
-                + boardContent + ", boardUser=" + boardUser + ", boardDate=" + boardDate + "]";
-    }
+	@Override
+	public String toString() {
+		return "Board [boardNo=" + boardNo + ", boardPw=" + boardPw + ", boardTitle=" + boardTitle + ", boardContent="
+				+ boardContent + ", boardUser=" + boardUser + ", boardDate=" + boardDate + "]";
+	}
+	
 }
 

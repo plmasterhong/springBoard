@@ -34,6 +34,9 @@
 	
 	<!-- 삽입처리 -->
 	<insert id="insertBoard" parameterType="cafe.jjdev.springboard.vo.Board">
+		<selectKey keyProperty="boardNo" resultType="int" order="AFTER">
+    		SELECT LAST_INSERT_ID() as boardNo
+  		</selectKey>
 		INSERT INTO board(
 			board_pw, 
 			board_title, 
@@ -47,6 +50,22 @@
 			#{boardUser},
 			curDate())
 	</insert>
+	<!-- 파일 올리기 -->
+	<insert id="insertBoardFile" parameterType="cafe.jjdev.springboard.vo.Boardfile">
+		INSERT INTO boardfile(
+			board_no, 
+			file_name, 
+			file_ext, 
+			file_type,
+			file_size
+		) values(
+			#{boardNo},
+			#{fileName},
+			#{fileExt},
+			#{fileType},
+			#{fileSize})
+	</insert>
+	
 	
 	<!-- 삭제처리 -->
 	<delete id="deleteBoard" parameterType="cafe.jjdev.springboard.vo.Board">

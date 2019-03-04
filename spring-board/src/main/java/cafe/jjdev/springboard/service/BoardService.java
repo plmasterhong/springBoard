@@ -1,14 +1,21 @@
 package cafe.jjdev.springboard.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import cafe.jjdev.springboard.mapper.BoardMapper;
 import cafe.jjdev.springboard.vo.Board;
+import cafe.jjdev.springboard.vo.BoardRequest;
+import cafe.jjdev.springboard.vo.Boardfile;
 
 /*
  * @file BoardService.java
@@ -103,8 +110,55 @@ public class BoardService {
 	 * 			입력처리(result) 성공:1 실패:0
 	 * @return boardMapper.insertBoard(board)(int)
 	 */
-	public int addBoard(Board board) {
-		return boardMapper.insertBoard(board);
+	public void addBoard(BoardRequest boardRequest, String path){
+		/*
+		 *  1. Board분리 : board, file, boardfile(파일 정보)
+		 *  2. board -> Board Vo
+		 *  3. file정보 ->Boardfile Vo
+		 *  4. file -> path를 이용해 물리적 장치에 저장
+		 */
+		// 1
+		Board board = new Board();
+		board.setBoardTitle(boardRequest.getBoardTitle());
+		board.setBoardPw(boardRequest.getBoardPw());
+		board.setBoardUser(boardRequest.getBoardUser());
+		board.setBoardContent(boardRequest.getBoardContent());
+		
+		// board.getBoardNo()
+		boardMapper.insertBoard(board);
+		
+		// 2
+		List<MultipartFile> files = boardRequest.getFiles();
+		for(MultipartFile f : files) {
+			// f -> boardfile
+			Boardfile boardfile = new Boardfile();
+			boardfile.setBoardNo(board.getBoardNo());
+			boardfile.setFileSize(f.getSize());
+			boardfile.setFileType(f.getContentType());
+			
+			String originalFilename = f.getOriginalFilename();
+			int i = originalFilename.lastIndexOf(".");
+			String ext = originalFilename.substring(i+1);
+			
+			String fileName = UUID.randomUUID().toString();
+			boardfile.setFileExt(ext);
+			boardfile.setFileName(fileName);
+			boardMapper.insertBoardFile(boardfile);
+			
+			// 전체작업이 롤백되면 파일 삭제 작업은 직접!
+	
+			//3. 파일저장
+			try {
+				f.transferTo(new File(path+"/"+fileName+"."+ext));
+			} catch(IllegalStateException e) {
+				e.printStackTrace();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		//return boardMapper.insertBoard(board);
 	}
 	
 	/* -delete처리-

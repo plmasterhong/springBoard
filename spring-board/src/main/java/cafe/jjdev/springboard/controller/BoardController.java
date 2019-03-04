@@ -1,6 +1,9 @@
 package cafe.jjdev.springboard.controller;
 
+import java.io.IOException;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,10 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import cafe.jjdev.springboard.service.BoardService;
 import cafe.jjdev.springboard.vo.Board;
+import cafe.jjdev.springboard.vo.BoardRequest;
 
 /*
  * @file BoardController.java
@@ -75,8 +79,22 @@ public class BoardController {
 	 * @return String(view이름)
 	 */
     @PostMapping("/boardAdd")
-    public String boardAdd(Board board) {
-    	boardService.addBoard(board);
+    public String boardAdd(BoardRequest boardRequest, HttpServletRequest request) throws IllegalStateException, IOException {
+    	
+		/* Service
+		 * 1. board안이 fileList 분해하여 DB들어갈 수 있는 형태
+		 * 2. file저장: 파일경로 
+		 */
+    	String path = request.getSession().getServletContext().getRealPath("./upload");
+    	System.out.println(path+"<-- 실제주소");
+		/* form에서 넘어 온 값을 확인
+		 * System.out.println(path+"<-- 실제주소");
+		 * System.out.println(boardRequest.toString());
+		 * System.out.println(boardRequest.getFiles().toString());
+		 */
+		 
+    	boardService.addBoard(boardRequest, path);
+    	
     	return "redirect:/boardList"; // 글입력후 "/boardList"로 리다이렉트(재요청)
     }
     

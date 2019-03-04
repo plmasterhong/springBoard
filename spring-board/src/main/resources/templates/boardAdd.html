@@ -22,6 +22,10 @@
 		            	$('#boardUser').attr('placeholder','입력해주세요.');
 		            	$('#boardUser').focus();
 		            	return false;
+		            }else if($('#boardFile').val().length<1){
+		            	$('#boardFile').attr('placeholder','입력해주세요.');
+		            	$('#boardFile').focus();
+		            	return false;
 		            }
 	        	});
 	        });
@@ -40,7 +44,7 @@
 		        <h3 class="mb-0">boardAdd</h3>
 		    </div>
 		    <div class="card-body">
-		        <form id="boardAddForm" class="form" role="form" autocomplete="off" action="/boardAdd" method="post">
+		        <form id="boardAddForm" class="form" role="form" autocomplete="off" action="/boardAdd" method="post" enctype="multipart/form-data">
 		            <div class="form-group">
 		                <label for="inputName">Password</label>
 		                <input id="boardPw" type="password" class="form-control" name="boardPw">
@@ -58,9 +62,14 @@
 		                <input id="boardUser" type="text" class="form-control" name="boardUser">
 		            </div>
 		            <div class="form-group">
+		            	<label for="inputName">File</label>
+		            	<input id="boardFile" type="file" class="from-control" name="files">
+		            </div>
+		            <div class="form-group">
 		            	<input id="boardBtn" class="btn btn-success btn-lg float-right" type="submit" value="글입력"/>
 		            	<input class="btn btn-success btn-lg float-right" type="reset" value="초기화"/>
 		            </div>
+		            
 		        </form>
 		    </div>
 		<!-- </div> -->
